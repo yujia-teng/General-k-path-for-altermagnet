@@ -4,11 +4,11 @@ This is the script used for generating general k-path for band structure calcula
 Currently it fully supports VASP only. For QE user, a few more extra pre-/post-processing steps are needed. Will fully support QE soon. No plan for other codes at the moment.
 
 ## Usage
-`python3 find_operations.py`, based on `spinspg` https://github.com/spglib/spinspg, producing spin-flip operations used for next step.
+Step 1: `python3 find_operations.py`, based on `spinspg` https://github.com/spglib/spinspg, producing spin-flip operations used for next step.
 
-`python3 auto-generate-general-kpath.py`, generating the general k-path file `KPOINTS_modified`.
+Step 2: `python3 auto-generate-general-kpath.py`, generating the general k-path file `KPOINTS_modified`.
 
-Run the first-principle codes to perform band structure calculation based on the general k-path.
+Step 3: Run the first-principle codes to perform band structure calculation based on the general k-path.
 
 ## Example
 ```
