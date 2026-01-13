@@ -62,7 +62,7 @@ Successfully read 14 k-points from KPATH.in
 
 Step 2: Enter general k-point coordinates
 Format: kx ky kz (space-separated)
-Enter k-point: 0.277777778 0.33333333 0.25
+Enter k-point: 0.2777777778   0.1111111111   0.25
 
 Step 3: Selecting Transformation Matrix R
 Found 6 pre-calculated spin-flip operations:
@@ -106,7 +106,7 @@ Using Transformation Matrix R:
   [ 1. -1.  0.]
   [ 0. -1.  0.]
   [0. 0. 1.]
-k' (transformed k): [0.2778, -0.6111, 0.2500]
+k' (transformed k): [0.2778, -0.3889, 0.2500]
 Found 8 unique high-symmetry points
   0: GAMMA = (0.0000, 0.0000, 0.0000)
   1: M = (0.5000, 0.0000, 0.0000)
