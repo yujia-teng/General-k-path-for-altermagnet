@@ -124,4 +124,4 @@ Modified KPOINTS file written to: KPOINTS_modified
 
 Process completed successfully!
 ```
-Note: Currently, we need to manually type the k-point coordinate (`0.277777778 0.33333333 0.25` here), which should be the average/centroid of high-sym points in irr BZ. We are still working on this to make the whole procedure more automated. 
+Note: Currently, we need to manually type the k-point coordinate (`0.277777778 0.1111111111 0.25` here), which should be the average/centroid of high-sym points in irr BZ. We are still working on this to make the whole procedure more automated. 
