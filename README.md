@@ -3,8 +3,6 @@ This is the script used for generating general k-path for band structure calcula
 
 Currently it fully supports VASP only. For QE user, a few more extra pre-/post-processing steps are needed. Will fully support QE soon. No plan for other codes at the moment.
 
-`k_t` is just `k'`. I use `k_t` for now instead of `k'` is because of format problem in origin.
-
 ## Usage
 Step 1: `python3 find_operations.py`, based on `spinspg` https://github.com/spglib/spinspg, producing spin-flip operations used for next step.
 
@@ -126,4 +124,5 @@ Modified KPOINTS file written to: KPOINTS_modified
 
 Process completed successfully!
 ```
-Note: Currently, we need to manually type the k-point coordinate (`0.277777778 0.1111111111 0.25` here), which should be the average/centroid of high-sym points in irr BZ. We are still working on this to make the whole procedure more automated. 
+Note: 1. Currently, we need to manually type the k-point coordinate (`0.277777778 0.1111111111 0.25` here), which should be the average/centroid of high-sym points in irr BZ. We are still working on this to make the whole procedure more automated. 
+2. In output `k_t` is just `k'`. I use `k_t` for now instead of `k'` is because of format problem. Will solve this later.
