@@ -1,5 +1,5 @@
 # General-k-path-for-altermagnet
-This is the script used for generating general k-path for band structure calculation. 
+This is the script used for generating general k-path for band structure calculation. e.g. from `Γ−M−K−Γ` to `Γ−M−𝑘|𝑘'−M'−K'−𝑘'|𝑘−K-Γ`
 
 Currently it fully supports VASP only. For QE user, a few more extra pre-/post-processing steps are needed. Will fully support QE soon. No plan for other codes at the moment.
 
