@@ -84,6 +84,47 @@ figures and diagnostic records go into `alterseek_output/`.
 | `figure_camera_angle.txt` | `view_elev`/`view_azim` each 3D figure was saved at, ready to paste into `alterseek_input.toml` |
 | `alterseek_run.log` | Everything a successful run printed; overwritten by the next successful run |
 
+## Save Figures Without Popup Windows
+
+To save the figures without opening interactive windows, select Matplotlib's
+non-interactive `Agg` backend before starting the workflow.
+
+**Windows PowerShell:**
+
+```powershell
+$env:MPLBACKEND = "Agg"
+alterseek-path
+```
+
+This setting applies to subsequent commands in the same PowerShell session.
+To restore Matplotlib's default backend selection for later runs:
+
+```powershell
+Remove-Item Env:MPLBACKEND
+```
+
+**Linux/macOS (Bash or Zsh):**
+
+Set the backend once for the current terminal session:
+
+```bash
+export MPLBACKEND=Agg
+alterseek-path
+```
+
+Subsequent runs in the same session need only `alterseek-path`.
+To restore Matplotlib's default backend selection for later runs:
+
+```bash
+unset MPLBACKEND
+```
+
+Alternatively, apply the setting to just one run:
+
+```bash
+MPLBACKEND=Agg alterseek-path
+```
+
 ## Cell Handling
 
 The submitted structure remains the calculation and output cell, including

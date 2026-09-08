@@ -8,6 +8,7 @@ from mpl_toolkits.mplot3d import proj3d
 from matplotlib.patches import FancyArrowPatch
 from matplotlib.transforms import Bbox
 from matplotlib.colors import to_rgb
+from matplotlib.text import Annotation, Text
 
 from .plotting_common import (
     IBZ_FACE_COLORS,
@@ -53,6 +54,43 @@ class _Arrow3D(FancyArrowPatch):
         xs, ys, zs = proj3d.proj_transform(xs3d, ys3d, zs3d, self.axes.M)
         self.set_positions((xs[0], ys[0]), (xs[1], ys[1]))
         return np.min(zs)
+
+
+class _ReciprocalAxisLabel(Annotation):
+    """Keep upright text beyond a projected arrow tip with a gap in points."""
+
+    def __init__(self, text, start, tip, gap=7.0, **kwargs):
+        super().__init__(
+            text, xy=(0, 0), xytext=(0, 0), xycoords='data',
+            textcoords='offset points', ha='center', va='center',
+            annotation_clip=False, **kwargs,
+        )
+        self._start3d = np.asarray(start, dtype=float)
+        self._tip3d = np.asarray(tip, dtype=float)
+        self._gap_points = gap
+        self.set_clip_on(False)
+
+    def update_positions(self, renderer):
+        # Annotation updates on every draw, including camera motion and exports.
+        points = np.vstack([self._start3d, self._tip3d])
+        x, y, _ = proj3d.proj_transform(*points.T, self.axes.get_proj())
+        projected = np.column_stack([x, y])
+        self.xy = tuple(projected[1])
+        screen = self.axes.transData.transform(projected)
+        direction = screen[1] - screen[0]
+        length = np.linalg.norm(direction)
+        # Looking directly down an axis leaves no visible outward direction.
+        direction = direction / length if length > 1e-6 else np.array([0., 1.])
+
+        super().update_positions(renderer)
+        bounds = Text.get_window_extent(self, renderer)
+        # Put the entire text box beyond the tip, not just its anchor point.
+        half_extent = 0.5 * (
+            abs(direction[0]) * bounds.width + abs(direction[1]) * bounds.height
+        )
+        distance = half_extent / renderer.points_to_pixels(1.0) + self._gap_points
+        self.set_position(tuple(direction * distance))
+        super().update_positions(renderer)
 
 
 def _draw_ibz_faces_by_sector(ax, hull_pts, hull_simplices, hull_labels,
@@ -208,9 +246,10 @@ def setup_3d_ax(title, bz_loops, b_matrix, bz_center,
             color='black', lw=2.5, shrinkA=0, shrinkB=0, zorder=100,
         )
         ax.add_artist(arrow)
-        ax.text(tip[0] + outside[0]*0.08, tip[1] + outside[1]*0.08,
-                tip[2] + outside[2]*0.08, vec_labels[i],
-                color='black', fontsize=24, fontweight='bold', zorder=101)
+        ax.add_artist(_ReciprocalAxisLabel(
+            vec_labels[i], exit_pt, tip,
+            color='black', fontsize=24, fontweight='bold', zorder=101,
+        ))
     # Use independent axis ranges so short BZ dimensions retain their scale.
     all_pts = np.vstack([np.array(loop) for loop in bz_loops])
     ranges = np.ptp(all_pts, axis=0)  # [dx, dy, dz]
@@ -409,14 +448,20 @@ def _relayout_labels_for_save(fig, ax, max_shift=2.0, rounds=2):
     """Move labels away from overlaps in a fixed saved view.
 
     Interactive labels retain their 3D positions because their screen positions
-    change as the camera moves.
+    change as the camera moves. Reciprocal-axis labels keep their draw-time
+    arrow-tip spacing and act as fixed obstacles for the movable labels.
     """
     fig.canvas.draw()
     renderer = fig.canvas.get_renderer()
 
     placed = []
+    fixed_boxes = []
     for text in list(ax.texts):
-        if not text.get_text().strip():
+        if not text.get_visible() or not text.get_text().strip():
+            continue
+        if isinstance(text, _ReciprocalAxisLabel):
+            # Keep draw-time arrow clearance; other labels must avoid these.
+            fixed_boxes.append(text.get_window_extent(renderer))
             continue
         position_3d = getattr(text, 'get_position_3d', None)
         if position_3d is not None:
@@ -433,7 +478,7 @@ def _relayout_labels_for_save(fig, ax, max_shift=2.0, rounds=2):
         )
         text.set_visible(False)
         placed.append((clone, np.asarray(original_position, dtype=float)))
-    if len(placed) < 2:
+    if not placed:
         return
 
     avoid_points, drawn_part_ids = _drawn_points_for_label_layout(ax)
@@ -455,6 +500,10 @@ def _relayout_labels_for_save(fig, ax, max_shift=2.0, rounds=2):
             if other == index:
                 continue
             overlap = Bbox.intersection(box, other_box)
+            if overlap is not None:
+                penalty += overlap.width * overlap.height
+        for fixed_box in fixed_boxes:
+            overlap = Bbox.intersection(box, fixed_box)
             if overlap is not None:
                 penalty += overlap.width * overlap.height
         if len(avoid_points):
