@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.spatial import ConvexHull
 
+from .version import __version__
 from .find_sf_operations import SpinSymmetryError, run as find_sf_run
 from .compute_centroid_3d import run as compute_centroid
 from .symmetry import (no_altermagnetism_reason,
@@ -1483,7 +1484,7 @@ class KPathBuilder:
         """
         BOLD  = "\033[1m"
         RESET = "\033[0m"
-        print("=== Altermagnetic K-Path Generator ===")
+        print(f"=== AlterSeeK-Path {__version__} ===")
 
         try:
             input_config = _read_input_config()

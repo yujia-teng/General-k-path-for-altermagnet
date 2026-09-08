@@ -461,30 +461,6 @@ def _complete_g0_operations_in_submitted_basis(result, tol=1e-6):
     return next(iter(distinct_candidates.values()))[1]
 
 
-def _seekpath_lattice_tag(lattice, symprec):
-    """Return the HPKOT tag from the primitive lattice vectors alone."""
-    lattice_only_cell = (
-        np.asarray(lattice, dtype=float).tolist(),
-        [[0.11000000, 0.12000000, 0.15000001]],
-        [1],
-    )
-    with warnings.catch_warnings():
-        warnings.filterwarnings(
-            "ignore", message=r".*dict interface is deprecated.*"
-        )
-        warnings.filterwarnings(
-            "ignore",
-            category=DeprecationWarning,
-            module=r"seekpath\.hpkot(\..*)?",
-        )
-        result = seekpath.get_path(
-            lattice_only_cell,
-            with_time_reversal=True,
-            symprec=symprec,
-        )
-    return result["bravais_lattice_extended"]
-
-
 def _moment_colored_types(elements, moments, tol=0.02):
     """Assign one spglib type to each distinct element-and-moment color."""
     colors = []
@@ -1221,6 +1197,17 @@ def prepare_submitted_cell_analysis(
         magnetic_elements = [
             str(value) for value in magnetic_cell["elements"]
         ]
+        # Equal lattice lengths can have higher metric symmetry than G0.
+        # Classify the magnetic primitive structure with its spatial operations,
+        # just as the physical input-cell helper does, rather than its metric alone.
+        magnetic_helper = _build_g0_marker_cell(
+            magnetic_lattice,
+            magnetic_positions,
+            [atomic_numbers[element] for element in magnetic_elements],
+            _magnetic_primitive_nssg_operations(fsg_result),
+            symprec=symprec,
+            expected_spacegroup_number=expected_spacegroup_number,
+        )
         magnetic_moments = np.asarray(
             magnetic_cell.get(
                 "moments", np.zeros((len(magnetic_elements), 3))
@@ -1251,9 +1238,7 @@ def prepare_submitted_cell_analysis(
             "mcif_path": mcif_path,
             "magnetic_primitive_lattice": magnetic_lattice,
             "magnetic_primitive_sites": len(magnetic_elements),
-            "magnetic_primitive_lattice_tag": _seekpath_lattice_tag(
-                magnetic_lattice, symprec
-            ),
+            "magnetic_primitive_lattice_tag": magnetic_helper["seekpath_bravais"],
             "magnetic_summary": {
                 "index": fsg_result.get("index"),
                 "acc_symbol": fsg_result.get("acc_symbol"),

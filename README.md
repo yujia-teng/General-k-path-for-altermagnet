@@ -91,7 +91,7 @@ supplied via `alterseek_input.toml` — see Quick Start above.
 ## Example Run
 
 ```text
-=== Altermagnetic K-Path Generator ===
+=== AlterSeeK-Path 1.0.1 ===
 
 >>> Step 0: Spin symmetry
 Enter structure file (default: POSCAR, supports .vasp/.cif/.mcif): POSCAR

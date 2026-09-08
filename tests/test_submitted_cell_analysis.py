@@ -19,6 +19,22 @@ from alterseek.submitted_cell_analysis import _build_nonprimitive_bz_marker_cell
 REFERENCES = Path(__file__).parent / "references"
 
 
+def test_magnetic_primitive_tag_uses_g0_despite_tetragonal_metric(tmp_path):
+    preparation = prepare_submitted_cell_analysis(
+        str(REFERENCES / "La2NiO4.mcif"),
+        output_dir=str(tmp_path),
+        write_magnetic_diagnostic=True,
+    )
+
+    lengths = np.linalg.norm(preparation["magnetic_primitive_lattice"], axis=1)
+    assert np.isclose(lengths[0], lengths[1])
+    assert preparation["magnetic_primitive_sites"] == 28
+    assert preparation["physical_symmetry"]["number"] == 56
+    assert preparation["magnetic_primitive_lattice_tag"] == "oP1"
+    assert preparation["input_cell_symmetry"]["seekpath_bravais"] == "oP1"
+    assert preparation["bz_helper_symmetry"]["seekpath_bravais"] == "oP1"
+
+
 def _assert_ibz_volume_matches_k_group(result):
     bz_volume = abs(float(np.linalg.det(result["b_matrix"])))
     assert np.isclose(

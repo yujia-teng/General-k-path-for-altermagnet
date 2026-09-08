@@ -85,7 +85,11 @@ def test_determinant_one_211_basis_is_the_native_output_cell(
     text = kpoints.read_text(encoding="utf-8")
 
     assert "Magnetic primitive cell:      SG Cmc2_1 (36)" in stdout
-    assert "[12 atoms, oP1]" in stdout
+    magnetic_row = next(
+        row for row in stdout.splitlines()
+        if row.startswith("Magnetic primitive cell:")
+    )
+    assert "[12 atoms, oC1]" in magnetic_row
     assert "Input cell:                   SG Cmc2_1 (36)" in stdout
     assert "Conventional/supercell detected:" not in stdout
     assert "Conventional/supercell BZ:" not in stdout
