@@ -1,0 +1,961 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="User guide for altermagnetic k-point path generation.">
+      
+      
+      
+        <link rel="canonical" href="https://yujia-teng.github.io/AlterSeeK-Path/workflow/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../plotting/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Workflow - AlterSeeK-Path</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#workflow" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="AlterSeeK-Path" class="md-header__button md-logo" aria-label="AlterSeeK-Path" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AlterSeeK-Path
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Workflow
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/yujia-teng/AlterSeeK-Path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    yujia-teng/AlterSeeK-Path
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="AlterSeeK-Path" class="md-nav__button md-logo" aria-label="AlterSeeK-Path" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AlterSeeK-Path
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/yujia-teng/AlterSeeK-Path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    yujia-teng/AlterSeeK-Path
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    User Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Workflow
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Workflow
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#step-0-spin-symmetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 0: Spin Symmetry
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-high-symmetry-k-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: High-Symmetry K-Path
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-general-k-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: General K Point
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-spin-flip-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Spin-Flip Operation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-build-the-general-k-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Build The General-k Path
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-save-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5: Save Outputs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save-figures-without-popup-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Save Figures Without Popup Windows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cell-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cell Handling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2d-slab-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      2D / Slab Mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Step
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plotting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Plotting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#step-0-spin-symmetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 0: Spin Symmetry
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-high-symmetry-k-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: High-Symmetry K-Path
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-general-k-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: General K Point
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-spin-flip-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Spin-Flip Operation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-build-the-general-k-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Build The General-k Path
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-save-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5: Save Outputs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save-figures-without-popup-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Save Figures Without Popup Windows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cell-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cell Handling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2d-slab-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      2D / Slab Mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Step
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="workflow">Workflow<a class="headerlink" href="#workflow" title="Permanent link">&para;</a></h1>
+<p>Run the main workflow with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>alterseek-path
+</code></pre></div>
+<p>It prompts for any input not supplied in <code>alterseek_input.toml</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What it does</th>
+<th>Input needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>Finds spin-flip symmetry operations and prints a compact symmetry summary</td>
+<td>Structure file; Cartesian spin axis and magnetic moments for non-mcif inputs</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>Generates the high-symmetry path</td>
+<td>Automatic</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Computes the general k point</td>
+<td>Automatic IBZ centroid</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Selects a detected spin-flip operation</td>
+<td>Press Enter for default, enter a number, or type <code>list</code></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Builds the general-k path</td>
+<td>Automatic</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Saves the output</td>
+<td>Output code (<code>vasp</code>, <code>qe</code>, or <code>abinit</code>); filenames are fixed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="step-0-spin-symmetry">Step 0: Spin Symmetry<a class="headerlink" href="#step-0-spin-symmetry" title="Permanent link">&para;</a></h2>
+<p>Reads the structure and moments, then identifies the magnetic phase, spin
+space group, and spin-flip/spin-preserving operations. Supported formats are
+<code>POSCAR</code>, <code>.vasp</code>, <code>.cif</code>, and <code>.mcif</code>.</p>
+<p>Only collinear magnetism is supported. For <code>.mcif</code> input, every nonzero moment
+must be parallel or antiparallel to one axis within a transverse-moment
+tolerance of <code>0.02</code> in the file's moment units. Noncollinear input is rejected.</p>
+<p>For non-<code>.mcif</code> input, enter a Cartesian spin axis (default <code>0 0 1</code>) and
+scalar moments along it in atom order, VASP <code>MAGMOM</code>-style (<code>1 -1</code> or
+<code>5*0 2*1.0</code>). Missing trailing values default to <code>0</code>; providing more moments
+than structure sites is rejected as an atom-order/count error.</p>
+<h2 id="step-1-high-symmetry-k-path">Step 1: High-Symmetry K-Path<a class="headerlink" href="#step-1-high-symmetry-k-path" title="Permanent link">&para;</a></h2>
+<p>The path is generated from the detected symmetry and reported with its
+SeeK-path lattice tag (<code>hP2</code>, <code>oI3</code>, <code>mC2</code>, etc.). Output coordinates use the
+submitted cell's reciprocal basis. Unwanted segments can be removed from the
+written k-path file afterward.</p>
+<h2 id="step-2-general-k-point">Step 2: General K Point<a class="headerlink" href="#step-2-general-k-point" title="Permanent link">&para;</a></h2>
+<p>The general point is the automatically computed IBZ centroid. The workflow
+aborts if it cannot obtain this point; there is no manual-coordinate fallback.</p>
+<h2 id="step-3-spin-flip-operation">Step 3: Spin-Flip Operation<a class="headerlink" href="#step-3-spin-flip-operation" title="Permanent link">&para;</a></h2>
+<p>Lists the detected spin-flip operations with a default. Accept the default,
+pick another by number, or <code>list</code> the matrices. Every selectable operation
+comes from the detected symmetry set.</p>
+<h2 id="step-4-build-the-general-k-path">Step 4: Build The General-k Path<a class="headerlink" href="#step-4-build-the-general-k-path" title="Permanent link">&para;</a></h2>
+<p>The selected operation maps k to k'; both are inserted into the path. Written
+coordinates are converted to the submitted reciprocal basis.</p>
+<h2 id="step-5-save-outputs">Step 5: Save Outputs<a class="headerlink" href="#step-5-save-outputs" title="Permanent link">&para;</a></h2>
+<p>Choose VASP (default), Quantum ESPRESSO, or ABINIT. The workflow writes a fixed
+k-path filename and creates or updates the matching plotting configuration.</p>
+<h2 id="output-files">Output Files<a class="headerlink" href="#output-files" title="Permanent link">&para;</a></h2>
+<p>Files for the selected output code are written to the working directory;
+figures and diagnostic records go into <code>alterseek_output/</code>.</p>
+<p><strong>Working directory</strong></p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>KPOINTS_alter</code></td>
+<td>General-k path for VASP line-mode band calculations</td>
+</tr>
+<tr>
+<td><code>KPOINTS_alter_&lt;code&gt;</code></td>
+<td>QE or ABINIT k-path; <code>&lt;code&gt;</code> is <code>qe</code> or <code>abinit</code></td>
+</tr>
+<tr>
+<td><code>alterseek_plot_&lt;code&gt;.toml</code></td>
+<td>Plot configuration; <code>&lt;code&gt;</code> is <code>vasp</code>, <code>qe</code>, or <code>abinit</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>alterseek_output/</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*_ibz_*</code>, <code>*_generalpath_*</code>, <code>*_spinflip_*</code>, <code>*_spinbz_*</code>, <code>*_spinbz_top_*</code></td>
+<td>BZ and IBZ figures; the red-only general-k figure for a non-altermagnet (<code>*_2d_generalpath_*</code> in 2D mode); and spin-flip/spin-pattern figures for an altermagnet (<code>.png</code>, plus <code>.pdf</code> when requested)</td>
+</tr>
+<tr>
+<td><code>spin*_operations.txt</code></td>
+<td>Full, spin-flip, and spin-preserving operation logs; written only when spin analysis runs</td>
+</tr>
+<tr>
+<td><code>*_magnetic_primitive.mcif</code></td>
+<td>Direct FindSpinGroup magnetic primitive reference with vector moments; it is not the calculation cell</td>
+</tr>
+<tr>
+<td><code>*_seekpath_basis_mapping.txt</code></td>
+<td>Submitted analysis/output lattice, internal primitive path lattice, standardized conventional lattice, and rotation mapping</td>
+</tr>
+<tr>
+<td><code>figure_camera_angle.txt</code></td>
+<td><code>view_elev</code>/<code>view_azim</code> each 3D figure was saved at, ready to paste into <code>alterseek_input.toml</code></td>
+</tr>
+<tr>
+<td><code>alterseek_run.log</code></td>
+<td>Everything a successful run printed; overwritten by the next successful run</td>
+</tr>
+</tbody>
+</table>
+<h2 id="save-figures-without-popup-windows">Save Figures Without Popup Windows<a class="headerlink" href="#save-figures-without-popup-windows" title="Permanent link">&para;</a></h2>
+<p>To save the figures without opening interactive windows, select Matplotlib's
+non-interactive <code>Agg</code> backend before starting the workflow.</p>
+<p><strong>Windows PowerShell:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">$env:MPLBACKEND</span> <span class="p">=</span> <span class="s2">"Agg"</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">alterseek-path</span>
+</code></pre></div>
+<p>This setting applies to subsequent commands in the same PowerShell session.
+To restore Matplotlib's default backend selection for later runs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">Remove-Item</span> <span class="n">Env</span><span class="p">:</span><span class="n">MPLBACKEND</span>
+</code></pre></div>
+<p><strong>Linux/macOS (Bash or Zsh):</strong></p>
+<p>Set the backend once for the current terminal session:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">MPLBACKEND</span><span class="o">=</span>Agg
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>alterseek-path
+</code></pre></div>
+<p>Subsequent runs in the same session need only <code>alterseek-path</code>.
+To restore Matplotlib's default backend selection for later runs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">unset</span><span class="w"> </span>MPLBACKEND
+</code></pre></div>
+<p>Alternatively, apply the setting to just one run:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">MPLBACKEND</span><span class="o">=</span>Agg<span class="w"> </span>alterseek-path
+</code></pre></div>
+<h2 id="cell-handling">Cell Handling<a class="headerlink" href="#cell-handling" title="Permanent link">&para;</a></h2>
+<p>The submitted structure remains the calculation and output cell, including
+when it is a conventional cell or supercell. Its reciprocal basis is used for
+the written k-points, folded BZ, IBZ, path, and figures. Primitive or
+standardized cells used internally never replace it. The
+<code>*_magnetic_primitive.mcif</code> file is a symmetry reference.</p>
+<h2 id="input-configuration">Input Configuration<a class="headerlink" href="#input-configuration" title="Permanent link">&para;</a></h2>
+<p>If an <code>alterseek_input.toml</code> file is present in the working directory,
+<code>alterseek-path</code> reads the values from it. Any key can be omitted and entered
+interactively instead.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">structure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"POSCAR"</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">spin_axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0 0 1"</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">moments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"5 -5"</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">symprec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-3</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">flip_option</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">output_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"vasp"</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">save_pdf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">view_elev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">14</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="n">view_azim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># vacuum_axis = "c"  # 2D only</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Input</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>structure</code></td>
+<td>Step 0 structure file</td>
+<td>default <code>POSCAR</code> if omitted</td>
+</tr>
+<tr>
+<td><code>spin_axis</code></td>
+<td>Step 0 spin axis</td>
+<td>Cartesian axis used by FindSpinGroup to construct collinear spin vectors from scalar moments; it does not fix a physical spin direction in the no-SOC workflow and is ignored for <code>.mcif</code> input</td>
+</tr>
+<tr>
+<td><code>moments</code></td>
+<td>Step 0 magnetic moments</td>
+<td>VASP <code>MAGMOM</code>-style string; use <code>""</code> for no moments</td>
+</tr>
+<tr>
+<td><code>symprec</code></td>
+<td>symmetry-detection tolerance</td>
+<td>positive number in angstrom (default <code>1e-3</code>); lower it to preserve smaller distortions</td>
+</tr>
+<tr>
+<td><code>flip_option</code></td>
+<td>Step 3 spin-flip operation</td>
+<td>plain integer, picks that numbered detected operation; omit for the interactive numbered menu (<code>list</code> remains available)</td>
+</tr>
+<tr>
+<td><code>output_code</code></td>
+<td>Step 5 output code</td>
+<td><code>"vasp"</code>, <code>"qe"</code>, or <code>"abinit"</code></td>
+</tr>
+<tr>
+<td><code>save_pdf</code></td>
+<td>BZ figure output format</td>
+<td>when <code>true</code>, also saves each figure as PDF</td>
+</tr>
+<tr>
+<td><code>view_elev</code>, <code>view_azim</code></td>
+<td>3D camera angle</td>
+<td>shared initial angle; current values appear in each interactive 3D figure</td>
+</tr>
+<tr>
+<td><code>vacuum_axis</code></td>
+<td>2D-slab vacuum axis of the input cell</td>
+<td><code>"a"</code>, <code>"b"</code> or <code>"c"</code> (default <code>"c"</code>); 2D mode only, overridden by an explicit <code>--vacuum-axis</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="2d-slab-mode">2D / Slab Mode<a class="headerlink" href="#2d-slab-mode" title="Permanent link">&para;</a></h2>
+<p>For a slab, <code>alterseek-path --2d</code> determines the layer group and 2D lattice
+and generates the path, IBZ centroid, and written k-points in the physical 2D
+reciprocal plane. Use <code>--vacuum-axis {a,b,c}</code> (default <code>c</code>) to identify the
+submitted cell's vacuum vector.</p>
+<p>Instead of the 3D figures, 2D mode saves top-down figures:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*_2d_ibz_*.png</code></td>
+<td>2D BZ, IBZ, in-plane path, and the general k point</td>
+</tr>
+<tr>
+<td><code>*_2d_spinflip_*.png</code></td>
+<td>spin-up IBZ and its spin-flip image with path connections</td>
+</tr>
+<tr>
+<td><code>*_2d_spinbz_*.png</code></td>
+<td>spin-colored 2D BZ domain pattern</td>
+</tr>
+</tbody>
+</table>
+<h2 id="next-step">Next Step<a class="headerlink" href="#next-step" title="Permanent link">&para;</a></h2>
+<p>After the band calculation, see <a href="../plotting/">Plotting</a> for VASP, QE, and
+ABINIT spin-resolved band-plot generation.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>
